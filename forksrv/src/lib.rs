@@ -139,9 +139,8 @@ impl ForkServer {
                     env.push(preload_lib);
                 } else {
                     // Otherwise, print a message
-                    println!("AFL_PRELOAD is not set.");
+                    // println!("AFL_PRELOAD is not set.");
                 }
-
 
                 if hide_output {
                     let null = fcntl::open("/dev/null", fcntl::OFlag::O_RDWR, stat::Mode::empty())
