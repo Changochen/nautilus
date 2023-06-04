@@ -80,6 +80,7 @@ impl Fuzzer {
         timeout_in_millis: u64,
         bitmap_size: usize,
     ) -> Self {
+        let hide_output = true;
         let fs = ForkServer::new(
             path.clone(),
             args.clone(),
