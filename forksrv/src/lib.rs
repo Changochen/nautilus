@@ -134,8 +134,8 @@ impl ForkServer {
 
                 if let Ok(afl_preload) = std::env::var("AFL_PRELOAD") {
                     // If it is set, set its value to 'LD_PRELOAD'
-                    let preload_lib = CString::new(format!("LD_PRELOAD={afl_preload}")).unwrap();
-                    //println!("repload lib: {:?}", preload_lib);
+                    let preload_lib = CString::new(format!("LD_PRELOAD=\"{afl_preload}\"")).unwrap();
+                    // println!("repload lib: {:?}", preload_lib);
                     env.push(preload_lib);
                 } else {
                     // Otherwise, print a message
