@@ -130,8 +130,18 @@ impl ForkServer {
                     "ASAN_OPTIONS=exitcode=223,abort_on_erro=true,detect_leaks=0,symbolize=0",
                 )
                 .expect("RAND_2089158993");
+                let mut env = vec![shm_id, asan_settings];
 
-                let env = vec![shm_id, asan_settings];
+                if let Ok(afl_preload) = std::env::var("AFL_PRELOAD") {
+                    // If it is set, set its value to 'LD_PRELOAD'
+                    let preload_lib = CString::new(format!("LD_PRELOAD={afl_preload}")).unwrap();
+                    println!("repload lib: {:?}", preload_lib);
+                    env.push(preload_lib);
+                } else {
+                    // Otherwise, print a message
+                    println!("AFL_PRELOAD is not set.");
+                }
+
 
                 if hide_output {
                     let null = fcntl::open("/dev/null", fcntl::OFlag::O_RDWR, stat::Mode::empty())
